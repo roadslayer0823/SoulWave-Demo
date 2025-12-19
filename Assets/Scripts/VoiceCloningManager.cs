@@ -23,7 +23,6 @@ public class VoiceCloningManager: MonoBehaviour
 
     [Header("Settings")]
     public string elevenLabsAPIKey = "sk_2e2194f3b42529a4b1071ab40ac1e82126704ca60a9d9f3a";  // Update with your real key!
-    private string googleAPIKey = "AIzaSyBmGypKoLMJPCJirwwVhwRJiUfSd0PIY1M";
     private string mp3FilePath = "";
     private string textFileName;
     private string micDevice;
@@ -132,7 +131,6 @@ public class VoiceCloningManager: MonoBehaviour
         {
             submitButton.gameObject.SetActive(true);
             submitButton.interactable = false;
-            submitButton.GetComponentInChildren<TMP_Text>().text = "Uploading..."; // Optional visual feedback
         }
 
         string isolatedPath = Path.Combine(Application.persistentDataPath, "isolatedVoice.mp3");
@@ -155,7 +153,6 @@ public class VoiceCloningManager: MonoBehaviour
         yield return new WaitForSeconds(RECORD_DURATION);
 
         Microphone.End(micDevice);
-        submitButton.GetComponentInChildren<TMP_Text>().text = "Uploading...";
         statusUpdate("Recording complete. Saving file...");
 
         recordedFilePath = Path.Combine(Application.persistentDataPath, "recordedVoice.wav");
@@ -218,7 +215,7 @@ public class VoiceCloningManager: MonoBehaviour
                     Debug.Log("Voice ID: " + voiceId);
                 }
 
-                EnableSubmitButton("Submit");
+                EnableSubmitButton();
             }
         }
     }
@@ -433,14 +430,11 @@ public class VoiceCloningManager: MonoBehaviour
         }
     }
 
-    private void EnableSubmitButton(string buttonText)
+    private void EnableSubmitButton()
     {
         if (submitButton != null)
         {
             submitButton.interactable = true;
-            var textComp = submitButton.GetComponentInChildren<TMP_Text>();
-            if (textComp != null)
-                textComp.text = buttonText;
         }
     }
 

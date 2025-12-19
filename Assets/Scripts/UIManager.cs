@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
+    public GameObject Background;
     public GameObject MainPagePanel;
     public GameObject CreateSoundPanel;
     public GameObject RecordVoicePanel;
@@ -48,12 +49,14 @@ public class UIManager : MonoBehaviour
             UploadMp3Panel.SetActive(false);
         }
         VoiceCloningManager.Instance.submitButton.gameObject.SetActive(false);
+        Background.SetActive(false);
     }
 
     public void OpenTextToSpeechVisualizerPanel()
     {
         TextToSpeechVisualizerPanel.SetActive(true);
         CustomTextPanel.SetActive(false);
+        Background.SetActive(false);
     }
 
     public void OpenRecordVoicePanel()
@@ -127,6 +130,7 @@ public class UIManager : MonoBehaviour
         RecordingVoiceVisualizerPanel.SetActive(false);
         UploadVoiceVisualizerPanel.SetActive(false);
         TextToSpeechVisualizerPanel.SetActive(false);
+        Background.SetActive(true);
         VoiceCloningManager.Instance.statusUpdate("");
         VoiceCloningManager.Instance.statusText.gameObject.SetActive(false);
         VoiceCloningManager.Instance.StopAudioSource();

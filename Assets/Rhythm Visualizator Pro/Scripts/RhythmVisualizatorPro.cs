@@ -363,6 +363,13 @@ public class RhythmVisualizatorPro : MonoBehaviour {
 
         visualizationsCanBeUpdated = true;
 		UpdateVisualizations ();
+
+		if (soundBarsTransform != null)
+		{
+			Vector3 newPos = soundBarsTransform.localPosition;
+			newPos.z = 60f;  // Negative Z pushes the ring away → appears at the top
+			soundBarsTransform.localPosition = newPos;
+		}
 	}
 
 	/// <summary>
