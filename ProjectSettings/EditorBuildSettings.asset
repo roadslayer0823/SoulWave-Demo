@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Rhythm Visualizator Pro/Scenes/Example Scene.unity
+    guid: 66ae786f130bda24da62828aeca54957
   m_configObjects: {}

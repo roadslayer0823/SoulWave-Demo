@@ -26,9 +26,8 @@ public class RhythmVisualizatorPro : MonoBehaviour {
 
     [Header("SOUND BARS [Requires Restart]")]
 
-
 	[Range (32, 256)]
-    public int soundBarsQuantity = 100;
+    public int soundBarsQuantity;
 
     List<GameObject> soundBars = new List<GameObject>();
 

@@ -30,8 +30,8 @@ public class VoiceCloningManager: MonoBehaviour
     private string recordedFilePath;
     private string voiceId = "";
     private AudioSource audioSource;
-
     public static VoiceCloningManager Instance;
+    public RhythmVisualizatorPro visualizer;
 
     private const int RECORD_DURATION = 30;
     private const int SAMPLE_RATE = 44100;
@@ -51,6 +51,13 @@ public class VoiceCloningManager: MonoBehaviour
     {
         micDevice = Microphone.devices.Length > 0 ? Microphone.devices[0] : null;
         audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+
+        visualizer = FindAnyObjectByType<RhythmVisualizatorPro>();
+
+        if(visualizer != null)
+        {
+            visualizer.audioSource = audioSource;
+        }
 
         // Null-check buttons before adding listeners
         if (generateCustomTextButton != null) generateFromCustomTextButton.onClick.AddListener(() => GenerateSpeechFromCustomText());
@@ -500,6 +507,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         statusText.text = "Press “Start Recording” and read the passage above, or read anything you like.";
         submitButton.gameObject.SetActive(false);
+        statusText.gameObject.SetActive(true);
         recordingVoiceButton.gameObject.SetActive(true);
     }
 
@@ -507,6 +515,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         statusText.text = "Press “Open File” and choose any audio you wanna to upload.";
         submitButton.gameObject.SetActive(false);
+        statusText.gameObject.SetActive(true);
         uploadMP3Button.gameObject.SetActive(true);
     }
 

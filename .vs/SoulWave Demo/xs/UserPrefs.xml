@@ -1,14 +1,14 @@
 ﻿<Properties StartupConfiguration="{51B1F68B-D3A5-0A99-147A-825D9B89AB25}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/VoiceCloningManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/VoiceCloningManager.cs" Line="18" Column="29" />
-      <File FileName="Assets/Scripts/UIManager.cs" Line="16" Column="51" />
-      <File FileName="Assets/Plugins/NativeShare/NativeShare.cs" />
+      <File FileName="Assets/Scripts/VoiceCloningManager.cs" Line="326" Column="17" />
+      <File FileName="Assets/Scripts/UIManager.cs" Line="35" Column="9" />
+      <File FileName="Assets/Rhythm Visualizator Pro/Scripts/RhythmVisualizatorPro.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="91b44d65-df07-435c-8417-ed7d8ca3f8d2" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7b103ffd-ecae-4034-a816-c6249313e860" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     public void Start()
     {
-        //HomepageButton();
+        HomepageButton();
     }
 
     public void OpenVisualizerPanel()
@@ -128,7 +128,7 @@ public class UIManager : MonoBehaviour
         UploadVoiceVisualizerPanel.SetActive(false);
         TextToSpeechVisualizerPanel.SetActive(false);
         VoiceCloningManager.Instance.statusUpdate("");
-        VoiceCloningManager.Instance.statusText.gameObject.SetActive(true);
+        VoiceCloningManager.Instance.statusText.gameObject.SetActive(false);
         VoiceCloningManager.Instance.StopAudioSource();
     }
 }
