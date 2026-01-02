@@ -120,7 +120,7 @@ public class VoiceCloningManager: MonoBehaviour
 
         yield return new WaitUntil(() => filePicked);
 #endif
-        statusUpdate("Uploading selected audio file...");
+        Debug.Log("Uploading selected audio file...");
 
         if (uploadMP3Button != null)
         {
@@ -255,7 +255,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         if (string.IsNullOrEmpty(voiceId) && !UIManager.Instance.isCustomText)
         {
-            statusUpdate("Voice not uploaded yet");
+            Debug.Log("Voice not uploaded yet");
             yield break;
         }
 
@@ -269,13 +269,13 @@ public class VoiceCloningManager: MonoBehaviour
             string textFilePath = Path.Combine(Application.streamingAssetsPath, textFileName);
             if (!File.Exists(textFilePath))
             {
-                statusUpdate($"Missing text file: {textFilePath}");
+                Debug.Log($"Missing text file: {textFilePath}");
                 yield break;
             }
             textToRead = File.ReadAllText(textFilePath);
         }
 
-        statusUpdate("Generating speech from file...");
+        Debug.Log("Generating speech from file...");
 
         string url = $"https://api.elevenlabs.io/v1/text-to-speech/{voiceId}";
         string jsonBody = JsonUtility.ToJson(new ElevenLabsTTSRequest(textToRead));
@@ -294,14 +294,13 @@ public class VoiceCloningManager: MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                statusUpdate("TTS failed: " + www.error);
                 Debug.Log("TTS Response: " + www.downloadHandler.text);  // For debugging
             }
             else
             {
                 byte[] audioData = www.downloadHandler.data;  // Fixed typo: audioDate → audioData
                 StartCoroutine(PlayGeneratedAudio(audioData));
-                statusUpdate("Please check the voice now.");
+                Debug.Log("Please check the voice now.");
             }
         }
     }
@@ -324,12 +323,12 @@ public class VoiceCloningManager: MonoBehaviour
                 }
                 else
                 {
-                    statusUpdate("❌ AudioSource missing—add component!");
+                    Debug.Log("❌ AudioSource missing—add component!");
                 }
             }
             else
             {
-                statusUpdate("❌ Playback failed: " + www.error);
+                Debug.Log("❌ Playback failed: " + www.error);
             }
         }
     }
@@ -392,7 +391,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         if (!File.Exists(inputPath))
         {
-            statusUpdate("Input file missing for isolation.");
+            Debug.Log("Input file missing for isolation.");
             yield break;
         }
 
@@ -412,14 +411,13 @@ public class VoiceCloningManager: MonoBehaviour
             {
                 string errorMsg = www.error + " | Response: " + www.downloadHandler.text;
                 Debug.Log("Isolation failed: " + errorMsg);
-                statusUpdate("Voice isolation failed: " + www.error);
                 yield break;
             }
 
             // Save isolated WAV
             byte[] isolatedData = www.downloadHandler.data;
             File.WriteAllBytes(outputPath, isolatedData);
-            statusUpdate("Voice isolated successfully!");
+            Debug.Log("Voice isolated successfully!");
 
             // --- ADD DETAILED DEBUG LOG ---
             Debug.Log($"[Isolation Debug] Isolated WAV path: {outputPath}");

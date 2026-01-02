@@ -9,9 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeShare.Editor", "Nativ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeFilePicker.Runtime", "NativeFilePicker.Runtime.csproj", "{2A54E75C-8B27-B743-3716-2019F7E77629}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.UIParticle", "Coffee.UIParticle.csproj", "{2FBE35A5-8902-2173-CDB3-DCBF5377D275}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeFilePicker.Editor", "NativeFilePicker.Editor.csproj", "{9821C8DA-C407-4D47-4C92-49A366F1B90E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeShare.Runtime", "NativeShare.Runtime.csproj", "{B836D6C3-F4D0-812A-5FC9-119A075C6929}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coffee.UIParticle.Editor", "Coffee.UIParticle.Editor.csproj", "{FF281596-2956-5075-A79D-59C632162A05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{2A54E75C-8B27-B743-3716-2019F7E77629}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A54E75C-8B27-B743-3716-2019F7E77629}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A54E75C-8B27-B743-3716-2019F7E77629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBE35A5-8902-2173-CDB3-DCBF5377D275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBE35A5-8902-2173-CDB3-DCBF5377D275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBE35A5-8902-2173-CDB3-DCBF5377D275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBE35A5-8902-2173-CDB3-DCBF5377D275}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9821C8DA-C407-4D47-4C92-49A366F1B90E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9821C8DA-C407-4D47-4C92-49A366F1B90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9821C8DA-C407-4D47-4C92-49A366F1B90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,6 +51,10 @@ Global
 		{B836D6C3-F4D0-812A-5FC9-119A075C6929}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B836D6C3-F4D0-812A-5FC9-119A075C6929}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B836D6C3-F4D0-812A-5FC9-119A075C6929}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF281596-2956-5075-A79D-59C632162A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF281596-2956-5075-A79D-59C632162A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF281596-2956-5075-A79D-59C632162A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF281596-2956-5075-A79D-59C632162A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

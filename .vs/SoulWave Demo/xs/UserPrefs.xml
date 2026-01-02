@@ -1,14 +1,16 @@
 ﻿<Properties StartupConfiguration="{51B1F68B-D3A5-0A99-147A-825D9B89AB25}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/VoiceCloningManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CameraFollowParticles.cs">
     <Files>
-      <File FileName="Assets/Scripts/VoiceCloningManager.cs" Line="326" Column="17" />
-      <File FileName="Assets/Scripts/UIManager.cs" Line="35" Column="9" />
+      <File FileName="Assets/Scripts/VoiceCloningManager.cs" Line="421" Column="1" />
+      <File FileName="Assets/Scripts/UIManager.cs" />
       <File FileName="Assets/Rhythm Visualizator Pro/Scripts/RhythmVisualizatorPro.cs" />
+      <File FileName="Assets/Scripts/SafeArea.cs" Line="13" Column="25" />
+      <File FileName="Assets/Scripts/CameraFollowParticles.cs" Line="7" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7b103ffd-ecae-4034-a816-c6249313e860" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a9793f27-92e8-4fb0-9448-8a9f79f02b54" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
