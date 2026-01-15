@@ -21,7 +21,6 @@ public class SessionManager : MonoBehaviour
             lastBackgroundTime = Time.time;
             PlayerPrefs.SetFloat(LAST_BACKGROUND_TIME_KEY, lastBackgroundTime);
             PlayerPrefs.Save();
-
             Debug.Log($"[Session] Backgrounded at {lastBackgroundTime:F1}");
         }
         else

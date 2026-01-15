@@ -14,14 +14,14 @@ public class LoginManager : MonoBehaviour
     public void TryLogin()
     {
         StartCoroutine(LoginRoutine());
+        SnackBar.Info("Logging in...");
     }
 
     IEnumerator LoginRoutine()
     {
         UnityWebRequest www = UnityWebRequest.Get(sheetUrl);
         yield return www.SendWebRequest();
-
-        if(www.result == UnityWebRequest.Result.Success)
+        if (www.result == UnityWebRequest.Result.Success)
         {
             string csvData = www.downloadHandler.text;
 
@@ -54,7 +54,6 @@ public class LoginManager : MonoBehaviour
                 if(SessionManager.Instance != null)
                 {
                     SessionManager.Instance.OnLoginSuccess(true);
-                    Debug.Log("working");
                 }
                 SceneManager.LoadScene("MainScene");
             }
