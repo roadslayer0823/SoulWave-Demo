@@ -74,10 +74,10 @@
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/Internal/Utilities/MaterialRepository.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/UIParticleUpdater.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/UIParticle.cs" />
+    <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/AnimatableProperty.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/Internal/Utilities/ObjectPool.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/UIParticleAttractor.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/UIParticleProjectSettings.cs" />
-    <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/AnimatableProperty.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/Internal/Extensions/Vector3Extensions.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/UIParticleRenderer.cs" />
     <Compile Include="Assets/Plugins/ParticleEffectForUGUI-main/Runtime/Internal/Extensions/Misc.cs" />

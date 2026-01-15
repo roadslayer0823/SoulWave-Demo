@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -15,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject RecordingVoiceVisualizerPanel;
     public GameObject UploadVoiceVisualizerPanel;
     public GameObject TextToSpeechVisualizerPanel;
+    public GameObject SettingPanel;
     public GameObject CommonUI;
 
     bool isRecordPanel;
@@ -97,6 +97,18 @@ public class UIManager : MonoBehaviour
         CommonUI.SetActive(true);
     }
 
+    public void OpenSettingPanel()
+    {
+        SettingPanel.SetActive(true);
+        MainPagePanel.SetActive(false);
+    }
+
+    public void CloseSettingPanel()
+    {
+        SettingPanel.SetActive(false);
+        MainPagePanel.SetActive(true);
+    }
+
     public void CloseRecordingVoiceVisualizerPanel()
     {
         RecordingVoiceVisualizerPanel.SetActive(false);
@@ -118,10 +130,19 @@ public class UIManager : MonoBehaviour
         targetPanel.SetActive(isOpenTargetPanel);
     }
 
+    public void Logout()
+    {
+        PlayerPrefs.DeleteKey("CurrentUsername");
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("LoginScene");
+    }
+
     public void HomepageButton()
     {
         MainPagePanel.SetActive(true);
         RecordVoicePanel.SetActive(false);
+        SettingPanel.SetActive(false);
         UploadMp3Panel.SetActive(false);
         CustomTextPanel.SetActive(false);
         GenerateSFXPanel.SetActive(false);

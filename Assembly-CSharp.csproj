@@ -68,6 +68,7 @@
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/TaaComponent.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/GeneralCameraShake.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Utils/ColorGradingCurve.cs" />
+    <Compile Include="Assets/Scripts/SnackBar.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Utils/GraphicsUtils.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/TestingUnitTests.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/MotionBlurComponent.cs" />
@@ -81,26 +82,31 @@
     <Compile Include="Assets/LeanTween/Testing/Testing248.cs" />
     <Compile Include="Assets/LeanTween/Testing/TestingDescr.cs" />
     <Compile Include="Assets/LeanTween/Testing/TestingColorTweening.cs" />
+    <Compile Include="Assets/Scripts/Manager/UIManager.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/PostProcessingComponent.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Scripts/WaterBase.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Scripts/SpecularLighting.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Models/ScreenSpaceReflectionModel.cs" />
+    <Compile Include="Assets/Scripts/Manager/SoundEffectManager.cs" />
+    <Compile Include="Assets/Scripts/Manager/SettingManager.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Scripts/SoundBar.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/GeneralSimpleUI.cs" />
-    <Compile Include="Assets/Scripts/LoginManager.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Music Player/Scripts/SongData.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Models/EyeAdaptationModel.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Scripts/Water.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/BuiltinDebugViewsComponent.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Models/BloomModel.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/PathSplineEndless.cs" />
+    <Compile Include="Assets/Scripts/Manager/SessionManager.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/Following.cs" />
     <Compile Include="Assets/Realistic Hail Set/Demo Scene/Scripts/DemoSceneController.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/PostProcessingModel.cs" />
     <Compile Include="Assets/LeanTween/Testing/TestingRotate.cs" />
+    <Compile Include="Assets/Scripts/Manager/VoiceCloningManager.cs" />
     <Compile Include="Assets/LeanTween/Testing/Testing243.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/ChromaticAberrationComponent.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/GeneralBasics2d.cs" />
+    <Compile Include="Assets/Scripts/Manager/SnackBarManager.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/DitheringComponent.cs" />
     <Compile Include="Assets/Scripts/CameraFollowParticles.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Utils/RenderTextureFactory.cs" />
@@ -123,7 +129,6 @@
     <Compile Include="Assets/LeanTween/Examples/Scripts/GeneralAdvancedTechniques.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Models/AmbientOcclusionModel.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Models/ChromaticAberrationModel.cs" />
-    <Compile Include="Assets/Scripts/VoiceCloningManager.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Scripts/PlanarReflection.cs" />
     <Compile Include="Assets/LeanTween/Testing/TestingSceneSwitching.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Music Player/Scripts/ActivateSong.cs" />
@@ -136,7 +141,6 @@
     <Compile Include="Assets/LeanTween/Examples/Scripts/GeneralSequencer.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/PostProcessingProfile.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/GeneralEventsListeners.cs" />
-    <Compile Include="Assets/Scripts/SoundEffectManager.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Attributes/TrackballAttribute.cs" />
     <Compile Include="Assets/LeanTween/Examples/Scripts/PathSpline2d.cs" />
     <Compile Include="Assets/LeanTween/Framework/LTSeq.cs" />
@@ -151,8 +155,8 @@
     <Compile Include="Assets/LeanTween/Framework/LeanTweenExt.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/ScreenSpaceReflectionComponent.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/GrainComponent.cs" />
+    <Compile Include="Assets/Scripts/Manager/LoginManager.cs" />
     <Compile Include="Assets/LeanTween/Framework/LeanSmooth.cs" />
-    <Compile Include="Assets/Scripts/UIManager.cs" />
     <Compile Include="Assets/Scripts/SplashController.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Attributes/GetSetAttribute.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/BloomComponent.cs" />
@@ -1099,12 +1103,12 @@
       <HintPath>Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Burst.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.2D.Common.Path.Editor">
@@ -1268,6 +1272,10 @@
     <ProjectReference Include="NativeFilePicker.Editor.csproj">
       <Project>{9821C8DA-C407-4D47-4C92-49A366F1B90E}</Project>
       <Name>NativeFilePicker.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Coffee.UIParticle.csproj">
+      <Project>{2FBE35A5-8902-2173-CDB3-DCBF5377D275}</Project>
+      <Name>Coffee.UIParticle</Name>
     </ProjectReference>
     <ProjectReference Include="NativeShare.Runtime.csproj">
       <Project>{B836D6C3-F4D0-812A-5FC9-119A075C6929}</Project>

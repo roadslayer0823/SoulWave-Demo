@@ -1,0 +1,78 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class SnackBar : MonoBehaviour
+{
+    [Header("References")]
+    [SerializeField] private TMP_Text messageText;
+
+    [Header("Animation Settings")]
+    [SerializeField] private float showDuration = 2.8f;
+    [SerializeField] private float animationTime = 0.35f;
+
+    private float bottomMargin = -350f;
+    private CanvasGroup canvasGroup;
+    private RectTransform rectTransform;
+
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        rectTransform = GetComponent<RectTransform>();
+
+        if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        if(rectTransform == null)
+        {
+            return;
+        }
+
+        canvasGroup.alpha = 0f;
+        rectTransform.anchoredPosition = new Vector2(0, -200);
+    }
+
+    public void Show(string message, float customDuration = -1f, Color? textColor = null)
+    {
+        if (string.IsNullOrWhiteSpace(message)) return;
+        messageText.text = message;
+
+        if (textColor.HasValue)
+        {
+            messageText.color = textColor.Value;
+        }
+
+        float duration = customDuration > 0 ? customDuration : showDuration;
+
+        LeanTween.cancel(gameObject);
+
+        rectTransform.anchoredPosition = new Vector2(0, -200);
+        canvasGroup.alpha = 0f;
+
+        LeanTween.moveLocalY(gameObject, bottomMargin, animationTime).setEase(LeanTweenType.easeOutBack);
+        LeanTween.alphaCanvas(canvasGroup, 1f, animationTime * 0.8f);
+
+        LTSeq sequence = LeanTween.sequence();
+        sequence.append(duration);
+        sequence.append(LeanTween.alphaCanvas(canvasGroup, 0f, animationTime));
+        sequence.append(LeanTween.moveLocalY(gameObject, bottomMargin - 40f, animationTime * 0.8f).setEase(LeanTweenType.easeInQuad));
+        sequence.append(() =>
+        {
+            Destroy(gameObject);
+        });
+    }
+
+    // Quick static helpers
+    public static void QuickShow(string message, float duration = -1f, Color? color = null)
+    {
+        if (SnackBarManager.Instance == null)
+        {
+            Debug.LogWarning("SnackbarManager not found!");
+            return;
+        }
+        SnackBarManager.Instance.ShowSnackbar(message, duration, color);
+    }
+
+    public static void Success(string msg) => QuickShow(msg, 3.2f, new Color(0.8f, 1f, 0.75f));
+    public static void Error(string msg) => QuickShow(msg, 3.6f, new Color(1f, 0.65f, 0.65f));
+    public static void Warning(string msg) => QuickShow(msg, 3.2f, new Color(1f, 0.92f, 0.55f));
+    public static void Info(string msg) => QuickShow(msg);
+}

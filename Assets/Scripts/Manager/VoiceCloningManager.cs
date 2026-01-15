@@ -35,6 +35,13 @@ public class VoiceCloningManager: MonoBehaviour
     private const int RECORD_DURATION = 30;
     private const int SAMPLE_RATE = 44100;
 
+    [Header("Validation Settings")]
+    public int minTextLength = 10;
+    public int maxTextLength = 300;
+
+    private bool wasValidLastFrame = false;
+    private string lastShownError = "";
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -58,6 +65,11 @@ public class VoiceCloningManager: MonoBehaviour
             visualizer.audioSource = audioSource;
         }
 
+        if(customTextInput != null)
+        {
+            customTextInput.onValueChanged.AddListener(_ => UpdateCustomTextValidationUI());
+        }
+
         // Null-check buttons before adding listeners
         if (generateCustomTextButton != null) generateFromCustomTextButton.onClick.AddListener(() => GenerateSpeechFromCustomText());
         if (uploadMP3Button != null) uploadMP3Button.onClick.AddListener(() => StartCoroutine(SelectAndUploadMP3()));
@@ -70,6 +82,25 @@ public class VoiceCloningManager: MonoBehaviour
 
     public void GenerateSpeechFromTextFile()
     {
+        if (!generateCustomTextButton.interactable)
+        {
+            string text = customTextInput.text.Trim();
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                SnackBar.Warning("Please enter some text first");
+            }  
+            else if (text.Length < minTextLength)
+            {
+                SnackBar.Error($"Need at least {minTextLength} characters");
+            }
+            else if (text.Length > maxTextLength)
+            {
+                SnackBar.Error($"Too long — maximum {maxTextLength} characters");
+            }
+            return;
+        }
+
         UIManager.Instance.OpenVisualizerPanel();
         StartCoroutine(GenerateSpeech(false));
     }
@@ -141,6 +172,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         if (string.IsNullOrEmpty(micDevice))
         {
+            SnackBar.Error("No microphone detected on this device");
             statusUpdate("No microphone detected");
             yield break;
         }
@@ -200,6 +232,7 @@ public class VoiceCloningManager: MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 statusUpdate("Upload failed: " + www.error);
+                SnackBar.Error("Failed to upload voice to server");
                 Debug.Log("Upload Response: " + www.downloadHandler.text);
             }
             else
@@ -255,7 +288,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         if (string.IsNullOrEmpty(voiceId) && !UIManager.Instance.isCustomText)
         {
-            Debug.Log("Voice not uploaded yet");
+            SnackBar.Error("Please record or upload a voice sample first");
             yield break;
         }
 
@@ -391,6 +424,7 @@ public class VoiceCloningManager: MonoBehaviour
     {
         if (!File.Exists(inputPath))
         {
+            SnackBar.Error("Selected audio file not found");
             Debug.Log("Input file missing for isolation.");
             yield break;
         }
@@ -666,12 +700,44 @@ public class VoiceCloningManager: MonoBehaviour
         }
     }
 
-    string GetGeneratedAudioPath()
+    //validation
+    private void UpdateCustomTextValidationUI()
     {
-        return Path.Combine(
-            Application.persistentDataPath,
-            "generated.mp3"
-        );
+        if (customTextInput == null) return;
+
+        string text = customTextInput.text.Trim();
+        bool isEmpty = string.IsNullOrWhiteSpace(text);
+        bool tooShort = !isEmpty && text.Length < minTextLength;
+        bool tooLong = text.Length > maxTextLength;
+        bool isValid = !isEmpty && !tooShort && !tooLong;
+
+        generateCustomTextButton.interactable = !isEmpty && !tooShort && !tooLong;
+
+        string currentError = "";
+
+        if (isEmpty)
+            currentError = "Please enter some text";
+        else if (tooShort)
+            currentError = $"Text too short (minimum {minTextLength} characters)";
+        else if (tooLong)
+            currentError = $"Text too long (maximum {maxTextLength} characters)";
+
+        // Only show/change message if state changed or error is different
+        if (!isValid && currentError != lastShownError)
+        {
+            if (isEmpty)
+                SnackBar.Warning(currentError);
+            else
+                SnackBar.Error(currentError);
+
+            lastShownError = currentError;
+        }
+        else if (isValid && !wasValidLastFrame)
+        {
+            lastShownError = "";
+        }
+
+        wasValidLastFrame = isValid;
     }
 
     [Serializable]

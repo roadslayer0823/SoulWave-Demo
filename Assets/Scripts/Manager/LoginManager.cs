@@ -47,12 +47,26 @@ public class LoginManager : MonoBehaviour
             }
 
             if (loginSuccess)
+            {
+                PlayerPrefs.SetString("CurrentUsername", usernameField.text);
+                PlayerPrefs.Save();
+
+                if(SessionManager.Instance != null)
+                {
+                    SessionManager.Instance.OnLoginSuccess(true);
+                    Debug.Log("working");
+                }
                 SceneManager.LoadScene("MainScene");
+            }
             else
-                Debug.Log("Invalid username or password.");
+            {
+                SnackBar.Error("Invalid username or password. Please try again.");
+                Debug.Log("Login failed: Invalid credentials");
+            }
         }
         else
         {
+            SnackBar.Error("Failed to connect to server. Check your internet connection.");
             Debug.Log("Error fetching sheet: " + www.error);
         }
     }

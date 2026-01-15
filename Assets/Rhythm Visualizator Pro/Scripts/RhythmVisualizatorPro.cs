@@ -363,13 +363,6 @@ public class RhythmVisualizatorPro : MonoBehaviour {
 
         visualizationsCanBeUpdated = true;
 		UpdateVisualizations ();
-
-		if (soundBarsTransform != null)
-		{
-			Vector3 newPos = soundBarsTransform.localPosition;
-			newPos.z = 60f;  // Negative Z pushes the ring away → appears at the top
-			soundBarsTransform.localPosition = newPos;
-		}
 	}
 
 	/// <summary>
@@ -592,8 +585,16 @@ public class RhythmVisualizatorPro : MonoBehaviour {
             return;
         }
 
-        // Visualizations
-        if (visualization == Visualizations.Circle) {
+		if (soundBarsTransform != null)
+		{
+			Vector3 pos = soundBarsTransform.localPosition;
+			pos.z = 0f;
+			soundBarsTransform.localPosition = pos;
+		}
+
+	    int currentVisualizatorPositionZ = 60;
+		// Visualizations
+		if (visualization == Visualizations.Circle) {
             for (int i = 0; i < usedSoundBars; i++) {
                 float angle = i * Mathf.PI * 2f / usedSoundBars;
                 Vector3 pos = soundBarsTransform.transform.localPosition;
@@ -605,8 +606,8 @@ public class RhythmVisualizatorPro : MonoBehaviour {
                 rot.x = 0;
                 soundBars[i].transform.localEulerAngles = rot;
             }
-
-        }
+			currentVisualizatorPositionZ = -50;
+		}
         else if (visualization == Visualizations.Line) {
             for (int i = 0; i < usedSoundBars; i++) {
                 Vector3 pos = soundBarsTransform.transform.localPosition;
@@ -630,8 +631,9 @@ public class RhythmVisualizatorPro : MonoBehaviour {
 
                 soundBars[i].transform.eulerAngles = newRot;
             }
+			currentVisualizatorPositionZ = 60;
 
-        }
+		}
         else if (visualization == Visualizations.Sphere) {
 
             var points = UniformPointsOnSphere(usedSoundBars, length);
@@ -647,6 +649,7 @@ public class RhythmVisualizatorPro : MonoBehaviour {
 
                 soundBars[i].transform.eulerAngles = rot;
             }
+			currentVisualizatorPositionZ = 100;
         }
         else if (visualization == Visualizations.Square) {
             try {
@@ -687,6 +690,13 @@ public class RhythmVisualizatorPro : MonoBehaviour {
 
 			CameraPosition ();
 
+		}
+
+		if (soundBarsTransform != null)
+		{
+			Vector3 newPos = soundBarsTransform.localPosition;
+			newPos.z = currentVisualizatorPositionZ;  // Negative Z pushes the ring away → appears at the top
+			soundBarsTransform.localPosition = newPos;
 		}
 	}
 
