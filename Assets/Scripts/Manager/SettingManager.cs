@@ -99,7 +99,7 @@ public class SettingManager : MonoBehaviour
         dropdownList.value = savedViz;
         dropdownList.RefreshShownValue();
 
-        isOn = PlayerPrefs.GetInt(prefix + "SnowEffect", 0) == 0;
+        isOn = PlayerPrefs.GetInt(prefix + "SnowEffect", 1) == 0;
         snowEffect.SetActive(isOn);
         snowButtonText.text = isOn ? "On" : "Off";
     }
@@ -142,4 +142,6 @@ public class SettingManager : MonoBehaviour
 
         SavePreferences();
     }
+
+    public bool GetIsOn() => isOn;
 }

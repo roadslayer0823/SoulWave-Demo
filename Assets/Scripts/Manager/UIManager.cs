@@ -22,6 +22,10 @@ public class UIManager : MonoBehaviour
     public GameObject CommonUI;
     public GameObject Background;
     public GameObject MainPagePanel;
+    public GameObject snowEffect;
+
+    [Header("Manager")]
+    public SettingManager settingManager;
 
     private bool isRecordPanel;
     private bool isCustomText;
@@ -67,6 +71,7 @@ public class UIManager : MonoBehaviour
             }
         }
         VoiceCloningManager.Instance.submitButton.gameObject.SetActive(false);
+        snowEffect.SetActive(false);
         Background.SetActive(false);
     }
     
@@ -74,6 +79,7 @@ public class UIManager : MonoBehaviour
     {
         TextToSpeechVisualizerPanel.SetActive(true);
         CustomTextPanel.SetActive(false);
+        snowEffect.SetActive(false);
         Background.SetActive(false);
     }
 
@@ -178,15 +184,20 @@ public class UIManager : MonoBehaviour
         UploadPDFPanel.SetActive(false);
         CustomTextPanel.SetActive(false);
         GenerateSFXPanel.SetActive(false);
-        CommonUI.SetActive(false);
         CreateSoundPanel.SetActive(false);
         RecordingVoiceVisualizerPanel.SetActive(false);
         UploadVoiceVisualizerPanel.SetActive(false);
         TextToSpeechVisualizerPanel.SetActive(false);
+        CommonUI.SetActive(false);
         Background.SetActive(true);
         VoiceCloningManager.Instance.submitButton.gameObject.SetActive(false);
         VoiceCloningManager.Instance.statusUpdate("");
         VoiceCloningManager.Instance.statusText.gameObject.SetActive(false);
         VoiceCloningManager.Instance.StopAudioSource();
+
+        if(settingManager.GetIsOn() == true)
+        {
+            snowEffect.SetActive(true);
+        }
     }
 }
