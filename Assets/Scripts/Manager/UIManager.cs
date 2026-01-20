@@ -4,21 +4,29 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    public GameObject Background;
-    public GameObject MainPagePanel;
+    [Header("Sound Panel")]
     public GameObject CreateSoundPanel;
     public GameObject RecordVoicePanel;
     public GameObject UploadMp3Panel;
+    public GameObject UploadPDFPanel;
     public GameObject CustomTextPanel;
     public GameObject GenerateSFXPanel;
+
+    [Header("Visualizer Panel")]
     public GameObject RecordingVoiceVisualizerPanel;
     public GameObject UploadVoiceVisualizerPanel;
     public GameObject TextToSpeechVisualizerPanel;
+
+    [Header("Generic UI")]
     public GameObject SettingPanel;
     public GameObject CommonUI;
+    public GameObject Background;
+    public GameObject MainPagePanel;
 
-    bool isRecordPanel;
-    public bool isCustomText;
+    private bool isRecordPanel;
+    private bool isCustomText;
+    private bool isUploadMP3;
+
 
     private void Awake()
     {
@@ -45,13 +53,23 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            VoiceCloningManager.Instance.uploadAgainButton.onClick.RemoveAllListeners();
             SetupCurrentUI(UploadVoiceVisualizerPanel, false, true);
-            UploadMp3Panel.SetActive(false);
+            if (isUploadMP3)
+            {
+                VoiceCloningManager.Instance.uploadAgainButton.onClick.AddListener(() => VoiceCloningManager.Instance.MP3PanelUploadAgainButton());
+                UploadMp3Panel.SetActive(false);
+            }
+            else
+            {
+                VoiceCloningManager.Instance.uploadAgainButton.onClick.AddListener(() => VoiceCloningManager.Instance.PDFPanelUploadAgainButton());
+                UploadPDFPanel.SetActive(false);
+            }
         }
         VoiceCloningManager.Instance.submitButton.gameObject.SetActive(false);
         Background.SetActive(false);
     }
-
+    
     public void OpenTextToSpeechVisualizerPanel()
     {
         TextToSpeechVisualizerPanel.SetActive(true);
@@ -70,10 +88,22 @@ public class UIManager : MonoBehaviour
 
     public void OpenUploadMp3Panel()
     {
+        isUploadMP3 = true;
         isRecordPanel = false;
         isCustomText = false;
         SetupCurrentUI(UploadMp3Panel, false, true);
-        VoiceCloningManager.Instance.ResetUploadingVoicePanel();
+        VoiceCloningManager.Instance.ResetUploadingPanel();
+        CreateSoundPanel.SetActive(false);
+    }
+
+    public void OpenUploadPDFPanel()
+    {
+        isUploadMP3 = false;
+        isRecordPanel = false;
+        isCustomText = false;
+        CommonUI.SetActive(true);
+        SetupCurrentUI(UploadPDFPanel, false, true);
+        VoiceCloningManager.Instance.ResetUploadingPanel();
         CreateSoundPanel.SetActive(false);
     }
 
@@ -128,6 +158,7 @@ public class UIManager : MonoBehaviour
     {
         MainPagePanel.SetActive(isOpenMainPage);
         targetPanel.SetActive(isOpenTargetPanel);
+        Background.SetActive(true);
     }
 
     public void Logout()
@@ -144,6 +175,7 @@ public class UIManager : MonoBehaviour
         RecordVoicePanel.SetActive(false);
         SettingPanel.SetActive(false);
         UploadMp3Panel.SetActive(false);
+        UploadPDFPanel.SetActive(false);
         CustomTextPanel.SetActive(false);
         GenerateSFXPanel.SetActive(false);
         CommonUI.SetActive(false);
@@ -152,6 +184,7 @@ public class UIManager : MonoBehaviour
         UploadVoiceVisualizerPanel.SetActive(false);
         TextToSpeechVisualizerPanel.SetActive(false);
         Background.SetActive(true);
+        VoiceCloningManager.Instance.submitButton.gameObject.SetActive(false);
         VoiceCloningManager.Instance.statusUpdate("");
         VoiceCloningManager.Instance.statusText.gameObject.SetActive(false);
         VoiceCloningManager.Instance.StopAudioSource();

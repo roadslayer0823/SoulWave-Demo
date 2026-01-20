@@ -74,6 +74,7 @@
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/MotionBlurComponent.cs" />
     <Compile Include="Assets/LeanTween/Framework/LTDescr.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/PostProcessingContext.cs" />
+    <Compile Include="Assets/Scripts/PdfPigQuickTest.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/ColorGradingComponent.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/EyeAdaptationComponent.cs" />
     <Compile Include="Assets/LeanTween/Framework/LeanTest.cs" />
@@ -186,27 +187,37 @@
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Editor Resources/Monitors/HistogramCompute.compute" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/FXAA3.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/EyeAdaptation.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.dll" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Utilities/CustomMotionTexture/Shaders/CustomMotionVectorTexture.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Editor Resources/UI/CurveBackground.shader" />
     <None Include="Assets/LeanTween/ReadMe.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/StreamingAssets/chinese_content.txt" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/BuiltinDebugViews.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Package.dll" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/EyeAdaptation.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/LutGen.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/EyeHistogram.compute" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
     <None Include="Assets/LeanTween/License.txt" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Tokens.dll" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
+    <None Include="Assets/Packages/Microsoft.Bcl.HashCode.6.0.0/lib/netstandard2.1/Microsoft.Bcl.HashCode.xml" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/TAA.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water4/Shaders/WaterInclude.cginc" />
+    <None Include="Assets/Packages/Microsoft.Bcl.HashCode.6.0.0/lib/netstandard2.1/Microsoft.Bcl.HashCode.dll" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/AmbientOcclusion.cginc" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.xml" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Editor Resources/Monitors/VectorscopeCompute.compute" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Tokens.xml" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/ColorGrading.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Editor Resources/Monitors/HistogramRender.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Package.xml" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/UberSecondPass.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water4/Shaders/FXWater4Advanced.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Tokenization.xml" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Fonts.xml" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
@@ -220,6 +231,8 @@
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/AmbientOcclusion.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/FXAA.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Core.dll" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Tokenization.dll" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/ScreenSpaceRaytrace.cginc" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/Tonemapping.cginc" />
@@ -238,21 +251,26 @@
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Editor Resources/Monitors/VectorscopeRender.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Shaders/FXWaterPro.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/Bloom.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.DocumentLayoutAnalysis.xml" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/Uber.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/DepthOfField.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/TAA.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.DocumentLayoutAnalysis.dll" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Fonts.dll" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/Blit.shader" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/Bloom.cginc" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Editor Resources/Monitors/WaveformCompute.compute" />
     <None Include="Assets/Rhythm Visualizator Pro/PostProcessing/Resources/Shaders/DepthOfField.cginc" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Core.xml" />
     <None Include="Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt" />
     <None Include="Assets/Realistic Hail Set/README.txt" />
     <None Include="Assets/StreamingAssets/chinese_content copy.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
+    <None Include="Assets/link.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -575,12 +593,44 @@
       <HintPath>/Users/leekahhin/Documents/2022.3.62f2/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UglyToad.PdfPig">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
       <HintPath>Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UglyToad.PdfPig.Package">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Package.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Tokens">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Tokens.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode">
+      <HintPath>Assets/Packages/Microsoft.Bcl.HashCode.6.0.0/lib/netstandard2.1/Microsoft.Bcl.HashCode.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Core">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Tokenization">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Tokenization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.DocumentLayoutAnalysis">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.DocumentLayoutAnalysis.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Fonts">
+      <HintPath>Assets/Packages/PdfPig.0.1.13/lib/netstandard2.0/UglyToad.PdfPig.Fonts.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">

@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UglyToad.PdfPig;
+using UglyToad.PdfPig.Content;
 using System;
 using System.IO;
 using System.Text;
 using System.Collections;
-using NativeShareNamespace;
 using TMPro;
 
 public class VoiceCloningManager: MonoBehaviour
@@ -15,6 +16,8 @@ public class VoiceCloningManager: MonoBehaviour
     public Button recordingVoiceButton;
     public Button submitButton;
     public Button uploadMP3Button;
+    public Button uploadPDFButton;
+    public Button uploadAgainButton;
     public TMP_Text statusText;
 
     [Header("UI Input")]
@@ -75,6 +78,7 @@ public class VoiceCloningManager: MonoBehaviour
         if (uploadMP3Button != null) uploadMP3Button.onClick.AddListener(() => StartCoroutine(SelectAndUploadMP3()));
         if (recordingVoiceButton != null) recordingVoiceButton.onClick.AddListener(StartAudioRecordAndUpload);
         if (submitButton != null) submitButton.onClick.AddListener(() => GenerateSpeechFromTextFile());
+        if (uploadPDFButton != null) uploadPDFButton.onClick.AddListener(() => StartCoroutine(SelectAndReadPDF()));
 
         // Initially hide submit button
         if (submitButton != null) submitButton.gameObject.SetActive(false);
@@ -82,14 +86,30 @@ public class VoiceCloningManager: MonoBehaviour
 
     public void GenerateSpeechFromTextFile()
     {
+        string textToRead;
+        string textFilePath = Path.Combine(Application.streamingAssetsPath, textFileName);
+
+        if (!File.Exists(textFilePath))
+        {
+            Debug.Log($"Missing text file: {textFilePath}");
+            return;
+        }
+        textToRead = File.ReadAllText(textFilePath);
+
+        UIManager.Instance.OpenVisualizerPanel();
+        StartCoroutine(GenerateSpeechFromString(textToRead));
+    }
+
+    public void GenerateSpeechFromCustomText()
+    {
+        string text = customTextInput.text.Trim();
+
         if (!generateCustomTextButton.interactable)
         {
-            string text = customTextInput.text.Trim();
-
             if (string.IsNullOrWhiteSpace(text))
             {
                 SnackBar.Warning("Please enter some text first");
-            }  
+            }
             else if (text.Length < minTextLength)
             {
                 SnackBar.Error($"Need at least {minTextLength} characters");
@@ -101,14 +121,14 @@ public class VoiceCloningManager: MonoBehaviour
             return;
         }
 
-        UIManager.Instance.OpenVisualizerPanel();
-        StartCoroutine(GenerateSpeech(false));
+        UIManager.Instance.OpenTextToSpeechVisualizerPanel();
+        if (string.IsNullOrWhiteSpace(text)) return;
+        StartCoroutine(GenerateSpeechFromString(text));
     }
 
-    public void GenerateSpeechFromCustomText()
+    public void GenerateSpeechFromPDF_File()
     {
-        UIManager.Instance.OpenTextToSpeechVisualizerPanel();
-        StartCoroutine(GenerateSpeech(true));
+        StartCoroutine(SelectAndReadPDF());
     }
 
     public void StartAudioRecordAndUpload()
@@ -239,7 +259,7 @@ public class VoiceCloningManager: MonoBehaviour
             {
                 string json = www.downloadHandler.text;
                 Debug.Log("Upload response: " + json);
-                statusUpdate("Voice uploaded successfully!");
+                SnackBar.Success("Voice uploaded successfully!");
 
                 var response = JsonUtility.FromJson<VoiceUploadResponse>(json);
                 if (!string.IsNullOrEmpty(response.voice_id))
@@ -284,41 +304,29 @@ public class VoiceCloningManager: MonoBehaviour
         }
     }
 
-    IEnumerator GenerateSpeech(bool isFromCustomText)
+    private IEnumerator GenerateSpeechFromString(string textToSpeak)
     {
-        if (string.IsNullOrEmpty(voiceId) && !UIManager.Instance.isCustomText)
+        if (string.IsNullOrWhiteSpace(textToSpeak))
         {
-            SnackBar.Error("Please record or upload a voice sample first");
+            SnackBar.Error("No text to speak");
             yield break;
         }
 
-        if (UIManager.Instance.isCustomText) voiceId = "21m00Tcm4TlvDq8ikWAM";
+        // Use cloned voice if available, otherwise fallback to default
+        string usedVoiceId = string.IsNullOrEmpty(voiceId)
+            ? "21m00Tcm4TlvDq8ikWAM"   // ← Rachel (default English voice)
+            : voiceId;
 
-        string textToRead = isFromCustomText ? customTextInput.text : "";
-        Debug.Log("text to read" + textToRead);
+        string url = $"https://api.elevenlabs.io/v1/text-to-speech/{usedVoiceId}";
 
-        if (string.IsNullOrEmpty(textToRead))
-        {
-            string textFilePath = Path.Combine(Application.streamingAssetsPath, textFileName);
-            if (!File.Exists(textFilePath))
-            {
-                Debug.Log($"Missing text file: {textFilePath}");
-                yield break;
-            }
-            textToRead = File.ReadAllText(textFilePath);
-        }
-
-        Debug.Log("Generating speech from file...");
-
-        string url = $"https://api.elevenlabs.io/v1/text-to-speech/{voiceId}";
-        string jsonBody = JsonUtility.ToJson(new ElevenLabsTTSRequest(textToRead));
+        var request = new ElevenLabsTTSRequest(textToSpeak);
+        string jsonBody = JsonUtility.ToJson(request);
 
         using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
             www.uploadHandler = new UploadHandlerRaw(bodyRaw);
             www.downloadHandler = new DownloadHandlerBuffer();
-
             www.SetRequestHeader("xi-api-key", elevenLabsAPIKey);
             www.SetRequestHeader("Content-Type", "application/json");
             www.SetRequestHeader("Accept", "audio/mpeg");
@@ -327,13 +335,15 @@ public class VoiceCloningManager: MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log("TTS Response: " + www.downloadHandler.text);  // For debugging
+                string error = www.downloadHandler.text;
+                Debug.LogError($"TTS failed: {www.error}\nResponse: {error}");
+                SnackBar.Error("Failed to generate voice - check API key & internet");
             }
             else
             {
-                byte[] audioData = www.downloadHandler.data;  // Fixed typo: audioDate → audioData
-                StartCoroutine(PlayGeneratedAudio(audioData));
-                Debug.Log("Please check the voice now.");
+                byte[] audioData = www.downloadHandler.data;
+                yield return PlayGeneratedAudio(audioData);
+                SnackBar.Info("Playing Audio...");
             }
         }
     }
@@ -462,6 +472,97 @@ public class VoiceCloningManager: MonoBehaviour
         }
     }
 
+    //Upload PDF file
+    IEnumerator SelectAndReadPDF()
+    {
+        string pdfPath = null;
+
+#if UNITY_EDITOR
+        pdfPath = UnityEditor.EditorUtility.OpenFilePanel("Select PDF File", "", "pdf");
+#else
+       bool filePicked = false;
+       NativeFilePicker.PickFile((path) =>
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                pdfPath = path;
+                filePicked = true;
+            }
+        }, new string[] { "com.adobe.pdf", "application/pdf" });
+        
+        yield return new WaitUntil(() => filePicked || pdfPath != null);
+#endif
+        if (string.IsNullOrEmpty(pdfPath))
+        {
+            statusUpdate("No PDF selected");
+            yield break;
+        }
+
+        SnackBar.Loading("Reading PDF");
+
+        string extractedText = ExtractTextFromPDF(pdfPath);
+
+        if (string.IsNullOrWhiteSpace(extractedText))
+        {
+            SnackBar.Error("Could not extract any text from this PDF");
+            SnackBar.DismissLoading();
+            yield break;
+        }
+
+        if (extractedText.Length > 5000)
+        {
+            int lastPeriod = extractedText.LastIndexOf('.', 5000);
+            if (lastPeriod > 1000)
+            {
+                extractedText = extractedText.Substring(0, lastPeriod + 1);
+            }
+            else
+            {
+                extractedText = extractedText.Substring(0, 5000);
+            }
+            SnackBar.Warning("Text truncated to 5000 chars (API limit)");
+        }
+
+        UIManager.Instance.OpenVisualizerPanel();
+
+        SnackBar.Loading("Generating voice...");
+
+        yield return GenerateSpeechFromString(extractedText);
+
+        SnackBar.DismissLoading();
+        SnackBar.Success("Generated Complete");
+    }
+
+    private string ExtractTextFromPDF(string pdfPath)
+    {
+        try
+        {
+            if (!File.Exists(pdfPath))
+            {
+                Debug.Log("PDF file not found: " + pdfPath);
+                return "";
+            }
+
+            using (PdfDocument document = PdfDocument.Open(pdfPath))
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (Page page in document.GetPages())
+                {
+                    sb.Append(page.Text);
+                    sb.Append("\n\n");
+                }
+
+                return sb.ToString().Trim();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log($"PDF extraction failed: {ex.Message}\nStack: {ex.StackTrace}");
+            return "";
+        }
+    }
+
     private void EnableSubmitButton()
     {
         if (submitButton != null)
@@ -485,9 +586,24 @@ public class VoiceCloningManager: MonoBehaviour
         audioSource.Stop();
     }
 
-    public void UploadAgainButton()
+    public void InputAgainButton()
+    {
+        UIManager.Instance.OpenTextToSpeechPanel();
+        UIManager.Instance.CloseTextToSpeechVisualizerPanel();
+        customTextInput.text = "";
+        audioSource.Stop();
+    }
+
+    public void MP3PanelUploadAgainButton()
     {
         UIManager.Instance.OpenUploadMp3Panel();
+        UIManager.Instance.CloseUploadVoiceVisualizerPanel();
+        audioSource.Stop();
+    }
+
+    public void PDFPanelUploadAgainButton()
+    {
+        UIManager.Instance.OpenUploadPDFPanel();
         UIManager.Instance.CloseUploadVoiceVisualizerPanel();
         audioSource.Stop();
     }
@@ -537,16 +653,16 @@ public class VoiceCloningManager: MonoBehaviour
         recordingVoiceButton.gameObject.SetActive(true);
     }
 
-    public void ResetUploadingVoicePanel()
+    public void ResetUploadingPanel()
     {
-        statusText.text = "Press “Open File” and choose any audio you wanna to upload.";
         submitButton.gameObject.SetActive(false);
-        statusText.gameObject.SetActive(true);
+        statusText.gameObject.SetActive(false);
         uploadMP3Button.gameObject.SetActive(true);
     }
 
     public void ResetTextToSpeechPanel()
     {
+        submitButton.gameObject.SetActive(false);
         statusText.gameObject.SetActive(false);
         customTextInput.text = "";
     }

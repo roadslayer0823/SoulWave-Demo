@@ -20,7 +20,7 @@ public class SnackBarManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void ShowSnackbar(string message, float duration = -1f, Color? textColor = null)
+    public void ShowSnackbar(string message, float duration = -1, Color? textColor = null, bool isLoading = false)
     {
         if(currentSnackBar != null)
         {
@@ -43,7 +43,14 @@ public class SnackBarManager : MonoBehaviour
 
         if (snack != null)
         {
-            snack.Show(message, duration, textColor);
+            if (isLoading)
+            {
+                snack.ShowLoading(message);
+            }
+            else
+            {
+                snack.Show(message, duration, textColor);
+            }
         }
         else
         {

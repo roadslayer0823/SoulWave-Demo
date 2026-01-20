@@ -14,6 +14,9 @@ public class SnackBar : MonoBehaviour
     private float bottomMargin = -350f;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
+    private bool isLoadingMode = false;
+
+    private static SnackBar _currentLoadingInstance;
 
     private void Awake()
     {
@@ -32,6 +35,32 @@ public class SnackBar : MonoBehaviour
 
     public void Show(string message, float customDuration = -1f, Color? textColor = null)
     {
+        if(_currentLoadingInstance != null && _currentLoadingInstance != this)
+        {
+            _currentLoadingInstance.Dismiss();
+        }
+
+        isLoadingMode = false;
+        _currentLoadingInstance = null;
+
+        InternalShow(message, customDuration > 0 ? customDuration : showDuration, textColor);
+    }
+
+    public void ShowLoading(string message)
+    {
+        if(_currentLoadingInstance != null && _currentLoadingInstance != this)
+        {
+            _currentLoadingInstance.Dismiss();
+        }
+
+        isLoadingMode = true;
+        _currentLoadingInstance = this;
+
+        InternalShow(message, Mathf.Infinity, Color.white);
+    }
+
+    private void InternalShow(string message, float duration, Color? textColor)
+    {
         if (string.IsNullOrWhiteSpace(message)) return;
         messageText.text = message;
 
@@ -39,8 +68,6 @@ public class SnackBar : MonoBehaviour
         {
             messageText.color = textColor.Value;
         }
-
-        float duration = customDuration > 0 ? customDuration : showDuration;
 
         LeanTween.cancel(gameObject);
 
@@ -50,14 +77,27 @@ public class SnackBar : MonoBehaviour
         LeanTween.moveLocalY(gameObject, bottomMargin, animationTime).setEase(LeanTweenType.easeOutBack);
         LeanTween.alphaCanvas(canvasGroup, 1f, animationTime * 0.8f);
 
-        LTSeq sequence = LeanTween.sequence();
-        sequence.append(duration);
-        sequence.append(LeanTween.alphaCanvas(canvasGroup, 0f, animationTime));
-        sequence.append(LeanTween.moveLocalY(gameObject, bottomMargin - 40f, animationTime * 0.8f).setEase(LeanTweenType.easeInQuad));
-        sequence.append(() =>
+        if(!isLoadingMode && duration < Mathf.Infinity)
         {
-            Destroy(gameObject);
-        });
+            LTSeq sequence = LeanTween.sequence();
+            sequence.append(duration);
+            sequence.append(LeanTween.alphaCanvas(canvasGroup, 0f, animationTime));
+            sequence.append(LeanTween.moveLocalY(gameObject, bottomMargin - 40f, animationTime * 0.8f).setEase(LeanTweenType.easeInQuad));
+            sequence.append(() =>
+            {
+                Destroy(gameObject);
+            });
+        }
+    }
+
+    public void Dismiss()
+    {
+        if (isLoadingMode)
+        {
+            LeanTween.cancel(gameObject);
+            LeanTween.alphaCanvas(canvasGroup, 0f, animationTime).setOnComplete(() => Destroy(gameObject));
+            _currentLoadingInstance = null;
+        }
     }
 
     // Quick static helpers
@@ -75,4 +115,18 @@ public class SnackBar : MonoBehaviour
     public static void Error(string msg) => QuickShow(msg, 3.6f, new Color(1f, 0.65f, 0.65f));
     public static void Warning(string msg) => QuickShow(msg, 3.2f, new Color(1f, 0.92f, 0.55f));
     public static void Info(string msg) => QuickShow(msg);
+
+    public static void Loading(string message)
+    {
+        if (SnackBarManager.Instance == null) return;
+        SnackBarManager.Instance.ShowSnackbar(message, Mathf.Infinity, Color.white, isLoading: true);
+    }
+
+    public static void DismissLoading()
+    {
+        if (_currentLoadingInstance != null)
+        {
+            _currentLoadingInstance.Dismiss();
+        }
+    }
 }

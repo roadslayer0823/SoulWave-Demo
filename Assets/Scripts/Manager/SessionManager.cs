@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,26 +19,29 @@ public class SessionManager : MonoBehaviour
     {
         if (pause)
         {
-            lastBackgroundTime = Time.time;
-            PlayerPrefs.SetFloat(LAST_BACKGROUND_TIME_KEY, lastBackgroundTime);
+            PlayerPrefs.SetString(LAST_BACKGROUND_TIME_KEY, DateTime.Now.ToString("o"));
             PlayerPrefs.Save();
             Debug.Log($"[Session] Backgrounded at {lastBackgroundTime:F1}");
         }
         else
         {
-            float savedTime = PlayerPrefs.GetFloat(LAST_BACKGROUND_TIME_KEY, Time.time);
-            float timeAway = Time.time - savedTime;
-
-            Debug.Log($"[Session] Resumed after {timeAway:F1} seconds away");
-
-            if (isLoggedIn && timeAway > inactivityTimeoutMinutes * 60f)
+            string savedStr = PlayerPrefs.GetString(LAST_BACKGROUND_TIME_KEY, DateTime.Now.ToString("o"));
+            if (DateTime.TryParse(savedStr, out DateTime savedTime))
             {
-                Debug.Log("[Session] Background inactivity exceeded timeout → Auto-logout");
-                AutoLogout();
-            }
-            else
-            {
-                ResetTimer();
+                TimeSpan timeAway = DateTime.Now - savedTime;
+                double secondsAway = timeAway.TotalSeconds;
+
+                Debug.Log($"[Session] Resumed after {secondsAway:F0} seconds away");
+
+                if (isLoggedIn && secondsAway > inactivityTimeoutMinutes * 60)
+                {
+                    Debug.Log("[Session] Background time exceeded timeout → Auto-logout");
+                    AutoLogout();
+                }
+                else
+                {
+                    ResetTimer();
+                }
             }
         }
     }
