@@ -4394,8 +4394,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104839872}
-        m_TargetAssemblyTypeName: VoiceCloningManager, Assembly-CSharp
+      - m_Target: {fileID: 10519747}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OKButton
         m_Mode: 1
         m_Arguments:
@@ -6475,8 +6475,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104839872}
-        m_TargetAssemblyTypeName: VoiceCloningManager, Assembly-CSharp
+      - m_Target: {fileID: 10519747}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: InputAgainButton
         m_Mode: 1
         m_Arguments:
@@ -9457,8 +9457,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104839872}
-        m_TargetAssemblyTypeName: VoiceCloningManager, Assembly-CSharp
+      - m_Target: {fileID: 10519747}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: RecordAgainButton
         m_Mode: 1
         m_Arguments:
@@ -11090,8 +11090,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 104839872}
-        m_TargetAssemblyTypeName: VoiceCloningManager, Assembly-CSharp
+      - m_Target: {fileID: 10519747}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OKButton
         m_Mode: 1
         m_Arguments:

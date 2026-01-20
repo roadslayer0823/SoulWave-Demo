@@ -579,44 +579,6 @@ public class VoiceCloningManager: MonoBehaviour
             Debug.Log(message);
     }
 
-    public void RecordAgainButton()
-    {
-        UIManager.Instance.OpenRecordVoicePanel();
-        UIManager.Instance.CloseRecordingVoiceVisualizerPanel();
-        audioSource.Stop();
-    }
-
-    public void InputAgainButton()
-    {
-        UIManager.Instance.OpenTextToSpeechPanel();
-        UIManager.Instance.CloseTextToSpeechVisualizerPanel();
-        customTextInput.text = "";
-        audioSource.Stop();
-    }
-
-    public void MP3PanelUploadAgainButton()
-    {
-        UIManager.Instance.OpenUploadMp3Panel();
-        UIManager.Instance.CloseUploadVoiceVisualizerPanel();
-        audioSource.Stop();
-    }
-
-    public void PDFPanelUploadAgainButton()
-    {
-        UIManager.Instance.OpenUploadPDFPanel();
-        UIManager.Instance.CloseUploadVoiceVisualizerPanel();
-        audioSource.Stop();
-    }
-
-    public void OKButton()
-    {
-        UIManager.Instance.HomepageButton();
-        UIManager.Instance.CloseRecordingVoiceVisualizerPanel();
-        UIManager.Instance.CloseUploadVoiceVisualizerPanel();
-        statusUpdate("");
-        audioSource.Stop();
-    }
-
     public void SaveGeneratedAudio()
     {
         string filePath = Path.Combine(Application.persistentDataPath, "generated.mp3");
@@ -917,4 +879,6 @@ public class VoiceCloningManager: MonoBehaviour
         public float style;
         public bool use_speaker_boost;
     }
+
+    public AudioSource GetAudioSource() => audioSource;
 }

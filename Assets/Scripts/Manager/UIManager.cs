@@ -61,12 +61,12 @@ public class UIManager : MonoBehaviour
             SetupCurrentUI(UploadVoiceVisualizerPanel, false, true);
             if (isUploadMP3)
             {
-                VoiceCloningManager.Instance.uploadAgainButton.onClick.AddListener(() => VoiceCloningManager.Instance.MP3PanelUploadAgainButton());
+                VoiceCloningManager.Instance.uploadAgainButton.onClick.AddListener(() => MP3PanelUploadAgainButton());
                 UploadMp3Panel.SetActive(false);
             }
             else
             {
-                VoiceCloningManager.Instance.uploadAgainButton.onClick.AddListener(() => VoiceCloningManager.Instance.PDFPanelUploadAgainButton());
+                VoiceCloningManager.Instance.uploadAgainButton.onClick.AddListener(() => PDFPanelUploadAgainButton());
                 UploadPDFPanel.SetActive(false);
             }
         }
@@ -158,6 +158,44 @@ public class UIManager : MonoBehaviour
     public void CloseTextToSpeechVisualizerPanel()
     {
         TextToSpeechVisualizerPanel.SetActive(false);
+    }
+
+    public void RecordAgainButton()
+    {
+        OpenRecordVoicePanel();
+        CloseRecordingVoiceVisualizerPanel();
+        VoiceCloningManager.Instance.GetAudioSource().Stop();
+    }
+
+    public void InputAgainButton()
+    {
+        OpenTextToSpeechPanel();
+        CloseTextToSpeechVisualizerPanel();
+        VoiceCloningManager.Instance.customTextInput.text = "";
+        VoiceCloningManager.Instance.GetAudioSource().Stop();
+    }
+
+    public void MP3PanelUploadAgainButton()
+    {
+        OpenUploadMp3Panel();
+        CloseUploadVoiceVisualizerPanel();
+        VoiceCloningManager.Instance.GetAudioSource().Stop();
+    }
+
+    public void PDFPanelUploadAgainButton()
+    {
+        OpenUploadPDFPanel();
+        CloseUploadVoiceVisualizerPanel();
+        VoiceCloningManager.Instance.GetAudioSource().Stop();
+    }
+
+    public void OKButton()
+    {
+        HomepageButton();
+        CloseRecordingVoiceVisualizerPanel();
+        CloseUploadVoiceVisualizerPanel();
+        VoiceCloningManager.Instance.statusUpdate("");
+        VoiceCloningManager.Instance.GetAudioSource().Stop();
     }
 
     public void SetupCurrentUI(GameObject targetPanel, bool isOpenMainPage, bool isOpenTargetPanel)
