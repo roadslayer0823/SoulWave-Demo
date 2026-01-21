@@ -462,6 +462,14 @@ MonoBehaviour:
   RecordingVoiceVisualizerPanel: {fileID: 1012934144}
   UploadVoiceVisualizerPanel: {fileID: 2064394487}
   TextToSpeechVisualizerPanel: {fileID: 197938454}
+  visualizerButtons:
+  - {fileID: 1449716025}
+  - {fileID: 530700548}
+  - {fileID: 1726835289}
+  - {fileID: 16312573}
+  - {fileID: 1802889102}
+  - {fileID: 304923014}
+  - {fileID: 942740767}
   SettingPanel: {fileID: 1914281455}
   CommonUI: {fileID: 690931465}
   Background: {fileID: 76089690}
@@ -3064,7 +3072,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 420313916}
   m_OnClick:
     m_PersistentCalls:

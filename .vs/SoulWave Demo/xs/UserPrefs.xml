@@ -2,20 +2,20 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager/VoiceCloningManager.cs">
     <Files>
       <File FileName="Assets/Rhythm Visualizator Pro/Scripts/RhythmVisualizatorPro.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/SafeArea.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SafeArea.cs" />
       <File FileName="Assets/Scripts/CameraFollowParticles.cs" />
-      <File FileName="Assets/Scripts/SnackBar.cs" Line="22" Column="6" />
-      <File FileName="Assets/Scripts/Manager/SnackBarManager.cs" Line="22" Column="1" />
+      <File FileName="Assets/Scripts/SnackBar.cs" />
+      <File FileName="Assets/Scripts/Manager/SnackBarManager.cs" />
       <File FileName="Assets/Scripts/Manager/LoginManager.cs" />
-      <File FileName="Assets/Scripts/Manager/VoiceCloningManager.cs" Line="783" Column="35" />
-      <File FileName="Assets/Scripts/Manager/UIManager.cs" Line="200" Column="40" />
-      <File FileName="Assets/Scripts/Manager/SessionManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PdfPigQuickTest.cs" Line="32" Column="80" />
+      <File FileName="Assets/Scripts/Manager/VoiceCloningManager.cs" Line="782" Column="48" />
+      <File FileName="Assets/Scripts/Manager/UIManager.cs" />
+      <File FileName="Assets/Scripts/Manager/SessionManager.cs" />
+      <File FileName="Assets/Scripts/PdfPigQuickTest.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1edf9a94-58f0-4969-951e-e062198da1c5" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5c901f40-a150-486c-b9d0-8dbaf536f05e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

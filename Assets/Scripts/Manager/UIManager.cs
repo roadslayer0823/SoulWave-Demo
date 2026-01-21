@@ -1,5 +1,6 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class UIManager : MonoBehaviour
     public GameObject RecordingVoiceVisualizerPanel;
     public GameObject UploadVoiceVisualizerPanel;
     public GameObject TextToSpeechVisualizerPanel;
-
+    public Button[] visualizerButtons;
+    
     [Header("Generic UI")]
     public GameObject SettingPanel;
     public GameObject CommonUI;
@@ -53,6 +55,7 @@ public class UIManager : MonoBehaviour
         if (isRecordPanel)
         {
             SetupCurrentUI(RecordingVoiceVisualizerPanel, false, true);
+            VoiceCloningManager.Instance.statusText.text = "";
             RecordVoicePanel.SetActive(false);
         }
         else
@@ -196,6 +199,24 @@ public class UIManager : MonoBehaviour
         CloseUploadVoiceVisualizerPanel();
         VoiceCloningManager.Instance.statusUpdate("");
         VoiceCloningManager.Instance.GetAudioSource().Stop();
+    }
+
+    public void DisableVisualizerButtons()
+    {
+        if (visualizerButtons == null) return;
+        foreach(var btn in visualizerButtons)
+        {
+            if(btn != null) btn.interactable = false;
+        }
+    }
+
+    public void EnableVisualizerButtons()
+    {
+        if (visualizerButtons == null) return;
+        foreach (var btn in visualizerButtons)
+        {
+            if (btn != null) btn.interactable = true;
+        }
     }
 
     public void SetupCurrentUI(GameObject targetPanel, bool isOpenMainPage, bool isOpenTargetPanel)

@@ -1,3 +1,5 @@
+using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,6 +19,7 @@ public class SnackBar : MonoBehaviour
     private bool isLoadingMode = false;
 
     private static SnackBar _currentLoadingInstance;
+    private Coroutine loadingDotsCoroutine;
 
     private void Awake()
     {
@@ -57,6 +60,9 @@ public class SnackBar : MonoBehaviour
         _currentLoadingInstance = this;
 
         InternalShow(message, Mathf.Infinity, Color.white);
+
+        if (loadingDotsCoroutine != null) StopCoroutine(loadingDotsCoroutine);
+        loadingDotsCoroutine = StartCoroutine(LoadingDotsAnimation(message));
     }
 
     private void InternalShow(string message, float duration, Color? textColor)
@@ -98,6 +104,12 @@ public class SnackBar : MonoBehaviour
             LeanTween.alphaCanvas(canvasGroup, 0f, animationTime).setOnComplete(() => Destroy(gameObject));
             _currentLoadingInstance = null;
         }
+
+        if(loadingDotsCoroutine != null)
+        {
+            StopCoroutine(loadingDotsCoroutine);
+            loadingDotsCoroutine = null;
+        }
     }
 
     // Quick static helpers
@@ -127,6 +139,18 @@ public class SnackBar : MonoBehaviour
         if (_currentLoadingInstance != null)
         {
             _currentLoadingInstance.Dismiss();
+        }
+    }
+
+    private IEnumerator LoadingDotsAnimation(string baseMessage)
+    {
+        int dotCount = 0;
+        while (isLoadingMode)
+        {
+            string dots = new string('.', dotCount % 4);
+            messageText.text = baseMessage + dots;
+            dotCount++;
+            yield return new WaitForSeconds(0.4f);
         }
     }
 }

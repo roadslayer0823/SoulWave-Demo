@@ -160,18 +160,36 @@ public class VoiceCloningManager: MonoBehaviour
         }
         mp3FilePath = path;
 #else
-        bool filePicked = false;
-        NativeFilePicker.PickFile((path) => {
-            if(!string.IsNullOrEmpty(path))
-            {
-                mp3FilePath = path;
-                filePicked = true;
-            }
-        }, new string[] { "public.audio", "audio/*", "audio/mpeg", "audio/mp3", "audio/wav", "audio/x-wav", "audio/ogg", "audio/x-m4a" });
+        string selectedPath = null;
+        NativeFilePicker.PickFile((path) => { selectedPath = path; },
+        new string[] { "public.audio", "audio/*", "audio/mpeg", "audio/mp3", "audio/wav", "audio/x-wav", "audio/ogg", "audio/x-m4a" });
 
-        yield return new WaitUntil(() => filePicked);
+        float timeout = 60f;
+        float elapsed = 0f;
+        while (selectedPath == null && elapsed < timeout)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (string.IsNullOrEmpty(selectedPath))
+        {
+            statusUpdate("Audio selection cancelled");
+            yield break;
+        }
+        string path = selectedPath;
 #endif
-        Debug.Log("Uploading selected audio file...");
+        string ext = Path.GetExtension(path).ToLower();
+        bool isValidAudio = ext == ".mp3" || ext == ".wav" || ext == ".ogg" || ext == ".m4a";
+
+        if(!isValidAudio || !File.Exists(path))
+        {
+            SnackBar.Error("Please select a valid audio file (mp3, wav, ogg, m4a)");
+            yield break;
+        }
+
+        mp3FilePath = path;
+        Debug.Log("Valid audio selected: " + path);
 
         if (uploadMP3Button != null)
         {
@@ -210,7 +228,7 @@ public class VoiceCloningManager: MonoBehaviour
         recordedFilePath = Path.Combine(Application.persistentDataPath, "recordedVoice.wav");
         SaveWavFile(clip, recordedFilePath);
 
-        statusUpdate("Uploading voice to ElevenLabs...");
+        statusUpdate("Uploading voice...");
         yield return DetectLanguageAndSetContext(recordedFilePath);
         yield return UploadVoiceToElevenLabs(recordedFilePath);
         
@@ -312,6 +330,9 @@ public class VoiceCloningManager: MonoBehaviour
             yield break;
         }
 
+        UIManager.Instance.DisableVisualizerButtons();
+        SnackBar.Loading("Generating voice");
+
         // Use cloned voice if available, otherwise fallback to default
         string usedVoiceId = string.IsNullOrEmpty(voiceId)
             ? "21m00Tcm4TlvDq8ikWAM"   // ← Rachel (default English voice)
@@ -331,7 +352,14 @@ public class VoiceCloningManager: MonoBehaviour
             www.SetRequestHeader("Content-Type", "application/json");
             www.SetRequestHeader("Accept", "audio/mpeg");
 
+            www.SetRequestHeader("xi-api-prefer-streaming", "false");
+            www.timeout = 60;
+
+            SnackBar.Loading("Sending request");
+
             yield return www.SendWebRequest();
+            UIManager.Instance.EnableVisualizerButtons();
+            SnackBar.DismissLoading();
 
             if (www.result != UnityWebRequest.Result.Success)
             {
@@ -494,11 +522,20 @@ public class VoiceCloningManager: MonoBehaviour
 #endif
         if (string.IsNullOrEmpty(pdfPath))
         {
-            statusUpdate("No PDF selected");
+            SnackBar.Error("Not PDF Selected");
             yield break;
         }
 
-        SnackBar.Loading("Reading PDF");
+        string ext = Path.GetExtension(pdfPath).ToLower();
+
+        if (ext != ".pdf" || !File.Exists(pdfPath))
+        {
+            SnackBar.Error("Please select a valid PDF file");
+            yield break;
+        }
+
+        UIManager.Instance.DisableVisualizerButtons();
+        SnackBar.Loading("Extracting text");
 
         string extractedText = ExtractTextFromPDF(pdfPath);
 
@@ -506,6 +543,7 @@ public class VoiceCloningManager: MonoBehaviour
         {
             SnackBar.Error("Could not extract any text from this PDF");
             SnackBar.DismissLoading();
+            UIManager.Instance.EnableVisualizerButtons();
             yield break;
         }
 
@@ -525,42 +563,12 @@ public class VoiceCloningManager: MonoBehaviour
 
         UIManager.Instance.OpenVisualizerPanel();
 
-        SnackBar.Loading("Generating voice...");
+        SnackBar.Loading("Generating voice");
 
         yield return GenerateSpeechFromString(extractedText);
 
         SnackBar.DismissLoading();
         SnackBar.Success("Generated Complete");
-    }
-
-    private string ExtractTextFromPDF(string pdfPath)
-    {
-        try
-        {
-            if (!File.Exists(pdfPath))
-            {
-                Debug.Log("PDF file not found: " + pdfPath);
-                return "";
-            }
-
-            using (PdfDocument document = PdfDocument.Open(pdfPath))
-            {
-                StringBuilder sb = new StringBuilder();
-
-                foreach (Page page in document.GetPages())
-                {
-                    sb.Append(page.Text);
-                    sb.Append("\n\n");
-                }
-
-                return sb.ToString().Trim();
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.Log($"PDF extraction failed: {ex.Message}\nStack: {ex.StackTrace}");
-            return "";
-        }
     }
 
     private void EnableSubmitButton()
@@ -667,6 +675,7 @@ public class VoiceCloningManager: MonoBehaviour
         File.WriteAllBytes(path, stream.ToArray());
     }
 
+    //return value
     private AudioClip PreprocessAudioClip(AudioClip input)
     {
         int sampleCount = input.samples * input.channels;
@@ -778,6 +787,40 @@ public class VoiceCloningManager: MonoBehaviour
         }
     }
 
+    private string ExtractTextFromPDF(string pdfPath)
+    {
+        try
+        {
+            using (PdfDocument document = PdfDocument.Open(pdfPath))
+            {
+                StringBuilder sb = new StringBuilder();
+                int pageCount = 0;
+                int charCount = 0;
+
+                foreach (Page page in document.GetPages())
+                {
+                    pageCount++;
+                    string pageText = page.Text;
+                    charCount += pageText.Length;
+                    sb.Append(pageText);
+                    sb.Append("\n\n");
+
+                    Debug.Log($"Page {pageCount}: {pageText.Length} chars extracted");
+                    if (pageText.Length > 0)
+                        Debug.Log("First 50 chars: " + pageText.Substring(0, Math.Min(50, pageText.Length)));
+                }
+
+                Debug.Log($"Total pages: {pageCount} | Total chars: {charCount}");
+                return sb.ToString().Trim();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"PDF error: {ex.Message}");
+            return "";
+        }
+    }
+
     //validation
     private void UpdateCustomTextValidationUI()
     {
@@ -854,7 +897,7 @@ public class VoiceCloningManager: MonoBehaviour
     public class ElevenLabsTTSRequest
     {
         public string text;
-        public string model_id = "eleven_multilingual_v2";
+        public string model_id = "eleven_turbo_v2_5";
         public uint? seed = 42;
         public VoiceSettings voice_settings;
 
