@@ -42,8 +42,11 @@ public class VoiceCloningManager: MonoBehaviour
     public int minTextLength = 10;
     public int maxTextLength = 300;
 
+    private bool isLoadingPDF = false;
     private bool wasValidLastFrame = false;
     private string lastShownError = "";
+    private int pageCount = 0;
+    private int charCount = 0;
 
     private void Awake()
     {
@@ -355,7 +358,7 @@ public class VoiceCloningManager: MonoBehaviour
             www.SetRequestHeader("xi-api-prefer-streaming", "false");
             www.timeout = 60;
 
-            SnackBar.Loading("Sending request");
+            SnackBar.Loading(isLoadingPDF ? $"Total pages: {pageCount} | Total chars: {charCount}, Sending request" : "Sending request");
 
             yield return www.SendWebRequest();
             UIManager.Instance.EnableVisualizerButtons();
@@ -371,7 +374,7 @@ public class VoiceCloningManager: MonoBehaviour
             {
                 byte[] audioData = www.downloadHandler.data;
                 yield return PlayGeneratedAudio(audioData);
-                SnackBar.Info("Playing Audio...");
+                SnackBar.Info("Playing Audio");
             }
         }
     }
@@ -561,6 +564,7 @@ public class VoiceCloningManager: MonoBehaviour
             SnackBar.Warning("Text truncated to 5000 chars (API limit)");
         }
 
+        isLoadingPDF = true;
         UIManager.Instance.OpenVisualizerPanel();
 
         SnackBar.Loading("Generating voice");
@@ -794,8 +798,6 @@ public class VoiceCloningManager: MonoBehaviour
             using (PdfDocument document = PdfDocument.Open(pdfPath))
             {
                 StringBuilder sb = new StringBuilder();
-                int pageCount = 0;
-                int charCount = 0;
 
                 foreach (Page page in document.GetPages())
                 {
@@ -924,4 +926,8 @@ public class VoiceCloningManager: MonoBehaviour
     }
 
     public AudioSource GetAudioSource() => audioSource;
+    public void SetIsLoadingPDF(bool isLoadingPDF)
+    {
+        this.isLoadingPDF = isLoadingPDF;
+    }
 }

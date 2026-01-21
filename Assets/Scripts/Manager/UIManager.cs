@@ -249,6 +249,7 @@ public class UIManager : MonoBehaviour
         TextToSpeechVisualizerPanel.SetActive(false);
         CommonUI.SetActive(false);
         Background.SetActive(true);
+        VoiceCloningManager.Instance.SetIsLoadingPDF(false);
         VoiceCloningManager.Instance.submitButton.gameObject.SetActive(false);
         VoiceCloningManager.Instance.statusUpdate("");
         VoiceCloningManager.Instance.statusText.gameObject.SetActive(false);
