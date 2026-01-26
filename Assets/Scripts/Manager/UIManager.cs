@@ -140,12 +140,7 @@ public class UIManager : MonoBehaviour
     {
         SettingPanel.SetActive(true);
         MainPagePanel.SetActive(false);
-    }
-
-    public void CloseSettingPanel()
-    {
-        SettingPanel.SetActive(false);
-        MainPagePanel.SetActive(true);
+        CommonUI.SetActive(true);
     }
 
     public void CloseRecordingVoiceVisualizerPanel()

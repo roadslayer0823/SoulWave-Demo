@@ -1,19 +1,30 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using TMPro;
 
 public class SettingManager : MonoBehaviour
 {
     [Header("Script Reference")]
     public RhythmVisualizatorPro visualizatorScript;
 
-    [Header("UI Reference")]
+    [Header("Option Panel")]
+    [SerializeField] private GameObject[] optionPanels;
+    [SerializeField] private Button nextPanelButton;
+    [SerializeField] private Button prevPanelButton;
+    [SerializeField] private TMP_Text panelTitle;
+
+    [Header("Setting Panel")]
     [SerializeField] TMP_Dropdown dropdownList;
     [SerializeField] private GameObject snowEffect;
-    [SerializeField] private TMP_Text snowButtonText;
+    [SerializeField] private Image snowButtonImage;
+    [SerializeField] private Sprite snowButtonOn;
+    [SerializeField] private Sprite snowButtonOff;
 
     private bool isOn = true;
     private string currentUsername = "";
+    private int currentPanelIndex = 0;
+    private string[] optionPanelsTitle = { "SETTINGS", "PROFILE", "VOICE LIBRARY", "STATISTIC" };
 
     private void Start()
     {
@@ -22,6 +33,11 @@ public class SettingManager : MonoBehaviour
         if (string.IsNullOrEmpty(currentUsername))
         {
             Debug.LogWarning("No username found → using default preferences");
+        }
+
+        if (optionPanels == null || optionPanels.Length == 0 || optionPanelsTitle == null || optionPanelsTitle.Length != optionPanels.Length)
+        {
+            return;
         }
 
         LoadPreferences();
@@ -89,6 +105,40 @@ public class SettingManager : MonoBehaviour
 
         dropdownList.onValueChanged.AddListener(OnDropDownValueChanged);
         OnDropDownValueChanged(dropdownList.value);
+        ShowPanel(currentPanelIndex);
+    }
+
+
+    public void NextPanel()
+    {
+        if (currentPanelIndex >= optionPanels.Length - 1) return;
+        currentPanelIndex++;
+        ShowPanel(currentPanelIndex);
+    }
+
+    public void PreviousPanel()
+    {
+        if (currentPanelIndex <= 0) return;
+        currentPanelIndex--;
+        ShowPanel(currentPanelIndex);
+    }
+
+    private void ShowPanel(int index)
+    {
+        foreach(var panel in optionPanels)
+        {
+            if (panel != null) panel.SetActive(false);
+        }
+
+        if(index >= 0 && index < optionPanels.Length && optionPanels[index] != null)
+        {
+            optionPanels[index].SetActive(true);
+        }
+
+        if(panelTitle != null)
+        {
+            panelTitle.text = (index >= 0 && index < optionPanelsTitle.Length) ? optionPanelsTitle[index] : "UNKNOWN PANEL";
+        }
     }
 
     private void LoadPreferences()
@@ -101,7 +151,7 @@ public class SettingManager : MonoBehaviour
 
         isOn = PlayerPrefs.GetInt(prefix + "SnowEffect", 1) == 0;
         snowEffect.SetActive(isOn);
-        snowButtonText.text = isOn ? "On" : "Off";
+        snowButtonImage.sprite = isOn ? snowButtonOn : snowButtonOff;
     }
 
     private void SavePreferences()
@@ -137,7 +187,7 @@ public class SettingManager : MonoBehaviour
     public void SnowEffectController()
     {
         isOn = !isOn;
-        snowButtonText.text = isOn ? "On" : "Off";
+        snowButtonImage.sprite = isOn ? snowButtonOn : snowButtonOff;
         snowEffect.SetActive(isOn);
 
         SavePreferences();
