@@ -565,14 +565,13 @@ public class VoiceCloningManager: MonoBehaviour
         }
 
         isLoadingPDF = true;
-        UIManager.Instance.OpenVisualizerPanel();
-
         SnackBar.Loading("Generating voice");
 
         yield return GenerateSpeechFromString(extractedText);
 
         SnackBar.DismissLoading();
         SnackBar.Success("Generated Complete");
+        UIManager.Instance.OpenVisualizerPanel();
     }
 
     private void EnableSubmitButton()

@@ -133,6 +133,7 @@
     <Compile Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Scripts/PlanarReflection.cs" />
     <Compile Include="Assets/LeanTween/Testing/TestingSceneSwitching.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Music Player/Scripts/ActivateSong.cs" />
+    <Compile Include="Assets/Scripts/SliderValueDisplay.cs" />
     <Compile Include="Assets/LeanTween/Testing/Testing246.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/Standard Assets/Environment/Water/Water/Scripts/WaterTile.cs" />
     <Compile Include="Assets/Rhythm Visualizator Pro/PostProcessing/Runtime/Components/FogComponent.cs" />
