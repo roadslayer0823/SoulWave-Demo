@@ -1840,7 +1840,7 @@ MonoBehaviour:
   statusText: {fileID: 368052709}
   customTextInput: {fileID: 1209316163}
   generateCustomTextButton: {fileID: 420313915}
-  elevenLabsAPIKey: 677dcc6d90d944bbddedcd2256ee3f0aba73e23c8b322322259b1a27fdebd6e1
+  elevenLabsAPIKey: 
   visualizer: {fileID: 1054705960}
   minTextLength: 10
   maxTextLength: 3000

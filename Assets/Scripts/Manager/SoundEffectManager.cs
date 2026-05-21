@@ -18,10 +18,16 @@ public class SoundEffectManager : MonoBehaviour
     public TMP_Text promptInfluenceValueText;
     public AudioSource audioSource;
 
-    private string elevenLabsAPIKey = "677dcc6d90d944bbddedcd2256ee3f0aba73e23c8b322322259b1a27fdebd6e1";
+    private string elevenLabsAPIKey; // Loaded from .env via EnvLoader
 
     private void Awake()
     {
+        string envKey = Environment.GetEnvironmentVariable("ELEVEN_LABS_API_KEY");
+        if (!string.IsNullOrEmpty(envKey))
+        {
+            elevenLabsAPIKey = envKey;
+        }
+
         SetupSlider(durationSlider, 0.1f, 30f, 5f);
     }
 

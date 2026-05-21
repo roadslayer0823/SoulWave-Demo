@@ -25,7 +25,7 @@ public class VoiceCloningManager: MonoBehaviour
     public Button generateCustomTextButton;
 
     [Header("Settings")]
-    public string elevenLabsAPIKey = "sk_2e2194f3b42529a4b1071ab40ac1e82126704ca60a9d9f3a";  // Update with your real key!
+    private string elevenLabsAPIKey; // Loaded from .env file via EnvLoader
     private string mp3FilePath = "";
     private string textFileName;
     private string micDevice;
@@ -61,6 +61,12 @@ public class VoiceCloningManager: MonoBehaviour
 
     private void Start()
     {
+        string envKey = Environment.GetEnvironmentVariable("ELEVEN_LABS_API_KEY");
+        if (!string.IsNullOrEmpty(envKey))
+        {
+            elevenLabsAPIKey = envKey;
+        }
+
         micDevice = Microphone.devices.Length > 0 ? Microphone.devices[0] : null;
         audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
 
