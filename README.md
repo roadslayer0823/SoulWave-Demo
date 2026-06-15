@@ -2,6 +2,18 @@
 
 SoulWave Demo is a Unity-based application that leverages the ElevenLabs API to provide advanced Text-to-Speech (TTS) and Voice Cloning capabilities. The application supports various input methods, including custom text, pre-recorded audio files, live microphone recordings, and PDF documents. It also features a real-time audio visualizer for an immersive playback experience.
 
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Demo-00C5FF?style=for-the-badge&logo=react&logoColor=white)](https://roadslayer0823.github.io/2026-portfolio-website/)
+
+---
+
+## 🌐 Live Demonstration
+
+This system has been fully integrated and deployed into my centralized production portfolio. You can interact with the live build, review architecture nodes, and explore interactive modules directly via the link below:
+
+🔗 **[Access the Interactive Live Demo Here](https://roadslayer0823.github.io/2026-portfolio-website/)**
+
+---
+
 ## Features
 
 - **Text-to-Speech (TTS)**: Generate high-quality, natural-sounding speech from text using the ElevenLabs API.
